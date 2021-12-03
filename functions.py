@@ -75,3 +75,16 @@ def remove_img(codigo):
     if check:
         os.remove(f'{codigo}.png')
 
+
+def has_data():
+    con = sqlite3.connect('dados.db')
+    cur = con.cursor()
+    print("Conexão realizada com sucesso!")
+    qry = "SELECT * FROM loec"
+    cur.execute(qry)
+    rows = cur.fetchall()
+    df = DataFrame(rows)
+    if len(df) != 0:
+        return True
+
+
