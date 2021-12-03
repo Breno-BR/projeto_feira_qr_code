@@ -26,17 +26,17 @@ def sql_save_data(codigo_obj, data_atual=dt.now().strftime("%d/%m/%Y")):
     except sqlite3.Error as error:
         print("Error while connecting to sqlite", error)
 
-#
-#
-#
-#
-# df = carregar_arquivo('Códigos.xlsx')
-# len(df.iloc[0, 0])
-#
-#
-# len(dt.now().strftime("%d/%m/%Y"))
-#
-# arq = df.iloc[0, 0]
-# data = dt.now().strftime("%d/%m/%Y")
-#
-# sql_save_data(arq)
+
+
+
+
+df = carregar_arquivo('Códigos.xlsx')
+len(df.iloc[0, 0])
+
+
+len(dt.now().strftime("%d/%m/%Y"))
+
+arq = df.iloc[0, 0]
+data = dt.now().strftime("%d/%m/%Y")
+
+sql_save_data(arq)
