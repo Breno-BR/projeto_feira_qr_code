@@ -1,7 +1,7 @@
 import streamlit as st
 from functions import *
-
-df =sql_load_data()
+#
+# df =sql_load_data()
 
 col1, col2, col3 = st.columns([1, 6, 1])
 
@@ -25,42 +25,48 @@ imagem = 'blank.jpg'
 lidos = 0
 
 if has_data():
-    st.subheader("Objetos cadastrados")
-    '''\n'''
-    df = sql_load_data()
-    df.iloc[:, 0].apply(gerar_codigo)
-
-    for i in range(0, len(df)):
-        df = sql_load_data()
-        col1, col2, col3, col4 = st.columns(4)
-        with st.container():
-            with col1:
-                st.write(f'{i+1} - {df.iloc[i, 0]}')
-            with col2:
-                imgs = [i.split('.')[0] for i in os.listdir(".") if i.endswith(".png")]
-                if (df.iloc[i, 0] in imgs):
-                    st.image(f'{df.iloc[i, 0]}.png')
-            with col3:
-                if st.checkbox(label='Leitura realizada', key=df.iloc[i, 0]):
-                    lidos += 1
-                    print(lidos)
-                    print(df.iloc[:, 0].nunique())
-            with col4:
-                if st.button("Delete", key=f'{df.iloc[i, 0]}'):
-                    sql_del_data(df.iloc[i, 0])
-                    remove_img(df.iloc[i, 0])
-                    st.warning(f'{df.iloc[i, 0]} removido!')
-
-    if lidos == len(df):
-        st.balloons()
-
+    with st.form("my_form"):
+        if has_data():
+            st.subheader("Objetos cadastrados")
+            '''\n'''
+            df = sql_load_data()
+            df.iloc[:, 0].apply(gerar_codigo)
+            for i in range(0, len(df)):
+                df = sql_load_data()
+                col1, col2, col3 = st.columns(3) #, col4 = st.columns(4)
+                with st.container():
+                    with col1:
+                        st.write(f'{i+1} - {df.iloc[i, 0]}')
+                    with col2:
+                        imgs = [i.split('.')[0] for i in os.listdir(".") if i.endswith(".png")]
+                        if (df.iloc[i, 0] in imgs):
+                            st.image(f'{df.iloc[i, 0]}.png')
+                    with col3:
+                        if st.checkbox(label='Leitura realizada', key=df.iloc[i, 0]):
+                            lidos += 1
+                            print(lidos)
+                            # print(df.iloc[:, 0].nunique())
+                    # with col4:
+                    #     if st.button("Delete", key=f'{df.iloc[i, 0]}'):
+                    #         sql_del_data(df.iloc[i, 0])
+                    #         remove_img(df.iloc[i, 0])
+                    #         st.warning(f'{df.iloc[i, 0]} removido!')
+            submitted = st.form_submit_button("Verificar leitura")
+            if submitted:
+                if lidos == len(df):
+                    st.balloons()
+                else:
+                    st.warning('Existem objetos pendentes de leitura!')
     '''\n'''
     if st.button("Apagar base de dados", key='apagar'):
         st.error("Tem certeza que deseja apagar todos os dados?")
         st.button('SIM', key='sim', on_click=apagar_base())
-
 else:
     st.warning("Base de dados sem objetos cadastrados. Envie o arquivo da LOEC.")
+
+#
+# else:
+#     st.warning("Base de dados sem objetos cadastrados. Envie o arquivo da LOEC.")
 
 
 

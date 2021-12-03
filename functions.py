@@ -101,3 +101,12 @@ def apagar_base():
     con.close()
 
 
+def mudar_status(dicionario, chave):
+    if dicionario[chave] == 0:
+        dicionario[chave] == 1
+    else:
+        dicionario[chave] == 0
+
+
+
+
