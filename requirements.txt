@@ -4,7 +4,6 @@ alembic==1.4.1
 altair==4.1.0
 amqp==5.0.6
 argon2-cffi==21.1.0
-arviz @ file:///home/conda/feedstock_root/build_artifacts/arviz_1633274821480/work
 astor==0.8.1
 astunparse==1.6.3
 async-generator @ file:///home/ktietz/src/ci/async_generator_1611927993394/work
