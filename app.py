@@ -28,7 +28,7 @@ df = sql_load_data()
 imagem = 'blank.jpg'
 
 for i in range(0, len(df)):
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 1.5])
     with st.container():
         with col1:
             st.write(df.iloc[i, 0])
@@ -42,7 +42,9 @@ for i in range(0, len(df)):
             if st.button("Delete", key=f'{df.iloc[i, 0]}'):
                 sql_del_data(df.iloc[i, 0])
                 remove_img(df.iloc[i, 0])
-                print(df.iloc[i, 0])
+                with col5:
+                    st.warning(f'{df.iloc[i, 0]} removido!')
+
 
 st.sidebar.subheader("Enviar arquivo LOEC")
 arquivo = st.sidebar.file_uploader("Enviar o arquivo com os códigos dos objetos:")
