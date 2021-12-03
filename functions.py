@@ -90,7 +90,7 @@ def has_data():
     con.close()
 
 
-def apagar_base():
+def apagar_base(df):
     con = sqlite3.connect('dados.db')
     cur = con.cursor()
     print("Conexão realizada com sucesso!")
@@ -99,6 +99,7 @@ def apagar_base():
     print(cur.fetchall())
     con.commit()
     con.close()
+    df.iloc[:, 0].apply(remove_img)
 
 
 def mudar_status(dicionario, chave):

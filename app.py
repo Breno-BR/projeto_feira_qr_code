@@ -60,7 +60,9 @@ if has_data():
     '''\n'''
     if st.button("Apagar base de dados", key='apagar'):
         st.error("Tem certeza que deseja apagar todos os dados?")
-        st.button('SIM', key='sim', on_click=apagar_base())
+        st.button('SIM', key='sim', on_click=apagar_base(df))
+
+
 else:
     st.warning("Base de dados sem objetos cadastrados. Envie o arquivo da LOEC.")
 
