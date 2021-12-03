@@ -1,6 +1,7 @@
 import streamlit as st
 from functions import *
 
+df =sql_load_data()
 
 col1, col2, col3 = st.columns([1, 6, 1])
 
@@ -26,6 +27,7 @@ if has_data():
     st.subheader("Objetos cadastrados")
     '''\n'''
     df = sql_load_data()
+    df.iloc[:, 0].apply(gerar_codigo)
 
     for i in range(0, len(df)):
         col1, col2, col3 = st.columns(3)
@@ -33,11 +35,9 @@ if has_data():
             with col1:
                 st.write(df.iloc[i, 0])
             with col2:
-                if st.button("QR Code", key=f'{df.iloc[i, 0]}'):
-                    gerar_codigo(df.iloc[i, 0])
-                    imagem = f'{df.iloc[i, 0]}.png'
-            # with col3:
-            #     st.write(df.iloc[i, 1])
+                imgs = [i.split('.')[0] for i in os.listdir(".") if i.endswith(".png")]
+                if (df.iloc[i, 0] in imgs):
+                    st.image(f'{df.iloc[i, 0]}.png')
             with col3:
                 if st.button("Delete", key=f'{df.iloc[i, 0]}'):
                     sql_del_data(df.iloc[i, 0])
