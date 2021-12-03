@@ -63,6 +63,7 @@ def sql_del_data(codigo):
         print("Conexão realizada com sucesso!")
         qry = "DELETE FROM loec WHERE codigo=?"
         cur.execute(qry, (codigo,))
+        print(cur.fetchall())
         con.commit()
         con.close()
     except sqlite3.Error as error:
@@ -86,5 +87,17 @@ def has_data():
     df = DataFrame(rows)
     if len(df) != 0:
         return True
+    con.close()
+
+
+def apagar_base():
+    con = sqlite3.connect('dados.db')
+    cur = con.cursor()
+    print("Conexão realizada com sucesso!")
+    qry = "DELETE FROM loec"
+    cur.execute(qry)
+    print(cur.fetchall())
+    con.commit()
+    con.close()
 
 

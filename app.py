@@ -43,6 +43,12 @@ if has_data():
                     sql_del_data(df.iloc[i, 0])
                     remove_img(df.iloc[i, 0])
                     st.warning(f'{df.iloc[i, 0]} removido!')
+
+    '''\n'''
+    if st.button("Apagar base de dados", key='apagar'):
+        st.error("Tem certeza que deseja apagar todos os dados?")
+        st.button('SIM', key='sim', on_click=apagar_base())
+
 else:
     st.warning("Base de dados sem objetos cadastrados. Envie o arquivo da LOEC.")
 
@@ -59,4 +65,4 @@ if arquivo is not None:
     submitted = st.sidebar.button("Gravar LOEC")
     if submitted:
         arquivo_carregado.iloc[:, 0].apply(sql_save_data)
-        st.sidebar.write("LOEC gravada!")
+        st.sidebar.warning("LOEC gravada. Atualize a página.")
