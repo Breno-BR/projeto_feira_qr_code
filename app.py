@@ -45,6 +45,11 @@ for i in range(0, len(df)):
                 st.warning(f'{df.iloc[i, 0]} removido!')
 
 
+
+if imagem != 'blank.jpg':
+    st.sidebar.header(imagem.strip(".png"))
+    st.sidebar.image(imagem)
+
 st.sidebar.subheader("Enviar arquivo LOEC")
 arquivo = st.sidebar.file_uploader("Enviar o arquivo com os códigos dos objetos:")
 if arquivo is not None:
@@ -53,7 +58,3 @@ if arquivo is not None:
     submitted = st.sidebar.button("Gravar LOEC")
     if submitted:
         st.sidebar.write("LOEC gravada!")
-
-if imagem != 'blank.jpg':
-    st.sidebar.header(imagem.strip(".png"))
-    st.sidebar.image(imagem)
