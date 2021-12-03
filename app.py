@@ -54,7 +54,7 @@ st.sidebar.subheader("Enviar arquivo LOEC")
 arquivo = st.sidebar.file_uploader("Enviar o arquivo com os códigos dos objetos:")
 if arquivo is not None:
     arquivo_carregado = carregar_arquivo(arquivo)
-    arquivo_carregado.iloc[:, 0].apply(sql_save_data)
     submitted = st.sidebar.button("Gravar LOEC")
     if submitted:
+        arquivo_carregado.iloc[:, 0].apply(sql_save_data)
         st.sidebar.write("LOEC gravada!")
