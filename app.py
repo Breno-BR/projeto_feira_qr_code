@@ -19,12 +19,15 @@ with col3:
 st.title("DEPED - Locker")
 '''\n'''
 
+st.subheader("Objetos cadastrados")
+st.table(sql_load_data('dados.db'))
+
 st.sidebar.subheader("Enviar arquivo LOEC")
 arquivo = st.sidebar.file_uploader("Enviar o arquivo com os códigos dos objetos:")
 if arquivo is not None:
     arquivo_carregado = carregar_arquivo(arquivo)
     arquivo_carregado.iloc[:, 0].apply(sql_save_data)
-    st.table(arquivo_carregado.head())
+    # st.table(arquivo_carregado.head())
     submitted = st.sidebar.button("Gravar LOEC")
     if submitted:
         st.sidebar.write("LOEC gravada!")
