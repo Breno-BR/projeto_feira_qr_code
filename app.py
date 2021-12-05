@@ -1,6 +1,6 @@
 import streamlit as st
 from functions import *
-import pyautogui
+from pyautogui import hotkey
 import os
 
 os.environ['DISPLAY'] = ':0'
@@ -81,7 +81,7 @@ else:
         if submitted:
             arquivo_carregado.iloc[:, 0].apply(sql_save_data)
             st.warning("LOEC gravada!")
-            pyautogui.hotkey('F5')
+            hotkey('F5')
 
 #
 # else:
