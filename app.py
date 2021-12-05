@@ -1,5 +1,7 @@
 import streamlit as st
 from functions import *
+import pyautogui
+
 #
 # df =sql_load_data()
 
@@ -24,12 +26,16 @@ st.title("DEPED - Locker")
 # imagem = 'blank.jpg'
 lidos = 0
 
+if 'executar' not in st.session_state:
+    st.session_state['executar'] = 0
+
 if has_data():
+    df = sql_load_data()
     with st.form("my_form"):
         if has_data():
             st.subheader("Objetos cadastrados")
             '''\n'''
-            df = sql_load_data()
+            # df = sql_load_data()
             df.iloc[:, 0].apply(gerar_codigo)
             for i in range(0, len(df)):
                 df = sql_load_data()
@@ -54,14 +60,15 @@ if has_data():
             submitted = st.form_submit_button("Verificar leitura")
             if submitted:
                 if lidos == len(df):
+                    st.session_state.executar = 1
                     st.balloons()
                 else:
+                    st.session_state.executar = 0
                     st.warning('Existem objetos pendentes de leitura!')
     '''\n'''
     if st.button("Apagar base de dados", key='apagar'):
         st.error("Tem certeza que deseja apagar todos os dados?")
         st.button('SIM', key='sim', on_click=apagar_base(df))
-
 
 else:
     st.warning("Base de dados sem objetos cadastrados. Envie o arquivo da LOEC.")
@@ -72,7 +79,8 @@ else:
         submitted = st.button("Gravar LOEC")
         if submitted:
             arquivo_carregado.iloc[:, 0].apply(sql_save_data)
-            st.warning("LOEC gravada. Atualize a página.")
+            st.warning("LOEC gravada!")
+            pyautogui.hotkey('F5')
 
 #
 # else:
