@@ -21,7 +21,7 @@ with col3:
 st.title("DEPED - Locker")
 '''\n'''
 
-imagem = 'blank.jpg'
+# imagem = 'blank.jpg'
 lidos = 0
 
 if has_data():
@@ -65,22 +65,30 @@ if has_data():
 
 else:
     st.warning("Base de dados sem objetos cadastrados. Envie o arquivo da LOEC.")
+    st.subheader("Enviar arquivo LOEC")
+    arquivo = st.file_uploader("Enviar o arquivo com os códigos dos objetos:")
+    if arquivo is not None:
+        arquivo_carregado = carregar_arquivo(arquivo)
+        submitted = st.button("Gravar LOEC")
+        if submitted:
+            arquivo_carregado.iloc[:, 0].apply(sql_save_data)
+            st.warning("LOEC gravada. Atualize a página.")
 
 #
 # else:
 #     st.warning("Base de dados sem objetos cadastrados. Envie o arquivo da LOEC.")
 
+#
+#
+# if imagem != 'blank.jpg':
+#     st.sidebar.header(imagem.strip(".png"))
+#     st.sidebar.image(imagem)
 
-
-if imagem != 'blank.jpg':
-    st.sidebar.header(imagem.strip(".png"))
-    st.sidebar.image(imagem)
-
-st.sidebar.subheader("Enviar arquivo LOEC")
-arquivo = st.sidebar.file_uploader("Enviar o arquivo com os códigos dos objetos:")
-if arquivo is not None:
-    arquivo_carregado = carregar_arquivo(arquivo)
-    submitted = st.sidebar.button("Gravar LOEC")
-    if submitted:
-        arquivo_carregado.iloc[:, 0].apply(sql_save_data)
-        st.sidebar.warning("LOEC gravada. Atualize a página.")
+# st.sidebar.subheader("Enviar arquivo LOEC")
+# arquivo = st.sidebar.file_uploader("Enviar o arquivo com os códigos dos objetos:")
+# if arquivo is not None:
+#     arquivo_carregado = carregar_arquivo(arquivo)
+#     submitted = st.sidebar.button("Gravar LOEC")
+#     if submitted:
+#         arquivo_carregado.iloc[:, 0].apply(sql_save_data)
+#         st.sidebar.warning("LOEC gravada. Atualize a página.")
