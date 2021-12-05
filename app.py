@@ -1,10 +1,6 @@
 import streamlit as st
 from functions import *
-from pyautogui import hotkey
 import os
-
-os.environ['DISPLAY'] = ':0'
-
 
 col1, col2, col3 = st.columns([1, 6, 1])
 
@@ -29,6 +25,7 @@ lidos = 0
 
 if 'executar' not in st.session_state:
     st.session_state['executar'] = 0
+
 
 if has_data():
     df = sql_load_data()
@@ -77,11 +74,14 @@ else:
     arquivo = st.file_uploader("Enviar o arquivo com os códigos dos objetos:")
     if arquivo is not None:
         arquivo_carregado = carregar_arquivo(arquivo)
-        submitted = st.button("Gravar LOEC")
-        if submitted:
-            arquivo_carregado.iloc[:, 0].apply(sql_save_data)
-            st.warning("LOEC gravada!")
-            hotkey('F5')
+        arquivo_carregado.iloc[:, 0].apply(sql_save_data)
+        st.experimental_rerun()
+
+        # submitted = st.button("Gravar LOEC")
+        # if submitted:
+        #     arquivo_carregado.iloc[:, 0].apply(sql_save_data)
+        #     st.warning("LOEC gravada!")
+        #     st.session_state.update()
 
 #
 # else:
