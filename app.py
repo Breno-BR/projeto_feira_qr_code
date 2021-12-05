@@ -1,9 +1,10 @@
 import streamlit as st
 from functions import *
 import pyautogui
+import os
 
-#
-# df =sql_load_data()
+os.environ['DISPLAY'] = ':0'
+
 
 col1, col2, col3 = st.columns([1, 6, 1])
 
