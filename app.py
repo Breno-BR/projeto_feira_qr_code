@@ -59,7 +59,8 @@ if has_data():
             if submitted:
                 if lidos == len(df):
                     st.session_state.executar = 1
-                    st.balloons()
+                    if st.session_state.executar == 1:
+                        st.balloons()
                 else:
                     st.session_state.executar = 0
                     st.warning('Existem objetos pendentes de leitura!')
