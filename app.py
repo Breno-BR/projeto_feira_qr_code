@@ -26,7 +26,6 @@ lidos = 0
 if 'executar' not in st.session_state:
     st.session_state['executar'] = 0
 
-
 if has_data():
     df = sql_load_data()
     with st.form("my_form"):
@@ -64,10 +63,8 @@ if has_data():
                     st.session_state.executar = 0
                     st.warning('Existem objetos pendentes de leitura!')
     '''\n'''
-    if st.button("Apagar base de dados", key='apagar'):
-        st.error("Tem certeza que deseja apagar todos os dados?")
-        if st.button('SIM', key='sim', on_click=apagar_base(df)):
-            st.experimental_rerun()
+    st.button("Apagar base de dados", key='apagar', on_click=apagar_base(df))
+
 
 else:
     st.warning("Base de dados sem objetos cadastrados. Envie o arquivo da LOEC.")
