@@ -59,15 +59,15 @@ if has_data():
             if submitted:
                 if lidos == len(df):
                     st.session_state.executar = 1
-                    if st.session_state.executar == 1:
-                        st.balloons()
+                    st.balloons()
                 else:
                     st.session_state.executar = 0
                     st.warning('Existem objetos pendentes de leitura!')
     '''\n'''
     if st.button("Apagar base de dados", key='apagar'):
         st.error("Tem certeza que deseja apagar todos os dados?")
-        st.button('SIM', key='sim', on_click=apagar_base(df))
+        if st.button('SIM', key='sim', on_click=apagar_base(df)):
+            st.experimental_rerun()
 
 else:
     st.warning("Base de dados sem objetos cadastrados. Envie o arquivo da LOEC.")
