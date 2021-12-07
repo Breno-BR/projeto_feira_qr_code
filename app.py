@@ -2,6 +2,8 @@ import streamlit as st
 from functions import *
 import os
 
+df = sql_load_data()
+
 col1, col2, col3 = st.columns([1, 6, 1])
 
 with col1:
@@ -25,6 +27,11 @@ lidos = 0
 
 if 'executar' not in st.session_state:
     st.session_state['executar'] = 0
+#
+# if 'df' not in st.session_state:
+#     df = sql_load_data()
+#     st.session_state['df'] = df
+#     print(st.session_state['df'])
 
 if has_data():
     df = sql_load_data()
@@ -35,7 +42,7 @@ if has_data():
             # df = sql_load_data()
             df.iloc[:, 0].apply(gerar_codigo)
             for i in range(0, len(df)):
-                df = sql_load_data()
+                # df = sql_load_data()
                 col1, col2, col3 = st.columns(3) #, col4 = st.columns(4)
                 with st.container():
                     with col1:
@@ -63,8 +70,6 @@ if has_data():
                     st.session_state.executar = 0
                     st.warning('Existem objetos pendentes de leitura!')
     '''\n'''
-    st.button("Apagar base de dados", key='apagar', on_click=apagar_base(df))
-
 
 else:
     st.warning("Base de dados sem objetos cadastrados. Envie o arquivo da LOEC.")
@@ -74,6 +79,17 @@ else:
         arquivo_carregado = carregar_arquivo(arquivo)
         arquivo_carregado.iloc[:, 0].apply(sql_save_data)
         st.experimental_rerun()
+
+# st.subheader('Apagar base de dados')
+if has_data():
+    if st.button("Apagar base de dados", key='apagar'):
+        apagar_base(df)
+        st.experimental_rerun()
+        print("base apagada")
+
+
+
+
 
         # submitted = st.button("Gravar LOEC")
         # if submitted:

@@ -38,11 +38,12 @@ def sql_load_data():
         qry = "SELECT * FROM loec"
         cur.execute(qry)
         rows = cur.fetchall()
-        df = DataFrame(rows)
-        df.columns = ['Objeto', 'Data']
-        df.drop_duplicates(subset='Objeto', keep='first', inplace=True)
-        con.close()
-        return df
+        if len(rows) > 0:
+            df = DataFrame(rows)
+            df.columns = ['Objeto', 'Data']
+            df.drop_duplicates(subset='Objeto', keep='first', inplace=True)
+            con.close()
+            return df
     except sqlite3.Error as error:
         print("Error while connecting to sqlite", error)
 
@@ -85,7 +86,7 @@ def has_data():
     cur.execute(qry)
     rows = cur.fetchall()
     df = DataFrame(rows)
-    if len(df) != 0:
+    if len(df) > 0:
         return True
     con.close()
 
@@ -100,14 +101,6 @@ def apagar_base(df):
     con.commit()
     con.close()
     df.iloc[:, 0].apply(remove_img)
-
-
-def mudar_status(dicionario, chave):
-    if dicionario[chave] == 0:
-        dicionario[chave] == 1
-    else:
-        dicionario[chave] == 0
-
 
 
 
